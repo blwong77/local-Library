@@ -15,10 +15,9 @@ function getBooksBorrowedCount(books) {
   }, 0);
 }
 
-function getMostCommonGenres(books) {
   // returns an array containing 5 or fewer objects where each index
   // contains an object with the `name` and `count`
-
+function getMostCommonGenres(books) {
   const resultArr = [];
   // iterating through the whole books array
   books.forEach(({ genre } = book) => {
@@ -42,20 +41,23 @@ function getMostPopularBooks(books) {
   return sortSlice(5, resultArr);
 }
 
-function getMostPopularAuthors(books, authors) {
   // popularity is represented by finding all books writted by author and then adding
   // the number of times those books have been borrowed
   // return an array containing {name: authName, count: borrowedCount}
-
-  const resultArr = [];
+function getMostPopularAuthors(books, authors) {
+  // const resultArr = [];
   // grabbing each author one by one
-  authors.forEach(({ name: { first, last }, id } = author) => {
+  let resultArr = authors.map(({ name: { first, last }, id } = author) => {
+    // create the object for each author and initialize the count to 0
     let auth = { name: `${first} ${last}`, count: 0 };
+    // use .reduce to iterate through each book object and if the authorId of the book and the id of the author match
+    // then add the borrow history to the authors count
     auth.count = books.reduce((acc, { borrows, authorId } = book) => {
       if (authorId === id) acc += borrows.length;
       return acc;
     }, 0);
-    resultArr.push(auth);
+    // resultArr.push(auth);
+    return auth;
   });
   return sortSlice(5, resultArr);
 }
