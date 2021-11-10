@@ -1,10 +1,10 @@
-function getTotalBooksCount(books) {
   //returns the number of book objects of the books array
+function getTotalBooksCount(books) {
   return books.length;
 }
 
-function getTotalAccountsCount(accounts) {
   //returns the number of accounts in the account array
+function getTotalAccountsCount(accounts) {
   return accounts.length;
 }
 
@@ -15,8 +15,8 @@ function getBooksBorrowedCount(books) {
   }, 0);
 }
 
-  // returns an array containing 5 or fewer objects where each index
-  // contains an object with the `name` and `count`
+// returns an array containing 5 or fewer objects where each index
+// contains an object with the `name` and `count`
 function getMostCommonGenres(books) {
   const resultArr = [];
   // iterating through the whole books array
@@ -34,6 +34,8 @@ function getMostCommonGenres(books) {
   return sortSlice(5, resultArr);
 }
 
+// returns an array of the 5 most popular books
+// books are weighted by the number of times a book has been borrowed
 function getMostPopularBooks(books) {
   const resultArr = books.map(({ title, borrows } = book) => {
     return { name: title, count: borrows.length };
@@ -41,13 +43,12 @@ function getMostPopularBooks(books) {
   return sortSlice(5, resultArr);
 }
 
-  // popularity is represented by finding all books writted by author and then adding
-  // the number of times those books have been borrowed
-  // return an array containing {name: authName, count: borrowedCount}
+// popularity is represented by finding all books writted by author and then adding
+// the number of times those books have been borrowed
+// return an array containing {name: authName, count: borrowedCount}
 function getMostPopularAuthors(books, authors) {
-  // const resultArr = [];
   // grabbing each author one by one
-  let resultArr = authors.map(({ name: { first, last }, id } = author) => {
+  const resultArr = authors.map(({ name: { first, last }, id } = author) => {
     // create the object for each author and initialize the count to 0
     let auth = { name: `${first} ${last}`, count: 0 };
     // use .reduce to iterate through each book object and if the authorId of the book and the id of the author match
@@ -56,7 +57,6 @@ function getMostPopularAuthors(books, authors) {
       if (authorId === id) acc += borrows.length;
       return acc;
     }, 0);
-    // resultArr.push(auth);
     return auth;
   });
   return sortSlice(5, resultArr);
