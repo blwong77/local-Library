@@ -1,9 +1,9 @@
-  //returns the number of book objects of the books array
+//returns the number of book objects of the books array
 function getTotalBooksCount(books) {
   return books.length;
 }
 
-  //returns the number of accounts in the account array
+//returns the number of accounts in the account array
 function getTotalAccountsCount(accounts) {
   return accounts.length;
 }
@@ -19,12 +19,9 @@ function getBooksBorrowedCount(books) {
 // contains an object with the `name` and `count`
 function getMostCommonGenres(books) {
   const resultArr = [];
-  // iterating through the whole books array
   books.forEach(({ genre } = book) => {
-    // for each book, if statement to find if the genre object exists already
     if (resultArr.find((resultObj) => resultObj.name === genre)) {
       resultArr.forEach((result) => {
-        // for each object in the resultArr check to see if that is the correct object
         if (result.name === genre) result.count++;
       });
     } else {
@@ -47,12 +44,8 @@ function getMostPopularBooks(books) {
 // the number of times those books have been borrowed
 // return an array containing {name: authName, count: borrowedCount}
 function getMostPopularAuthors(books, authors) {
-  // grabbing each author one by one
   const resultArr = authors.map(({ name: { first, last }, id } = author) => {
-    // create the object for each author and initialize the count to 0
     let auth = { name: `${first} ${last}`, count: 0 };
-    // use .reduce to iterate through each book object and if the authorId of the book and the id of the author match
-    // then add the borrow history to the authors count
     auth.count = books.reduce((acc, { borrows, authorId } = book) => {
       if (authorId === id) acc += borrows.length;
       return acc;
